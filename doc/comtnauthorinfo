@@ -1,0 +1,53 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class comtnauthorinfo {
+   author_nm: varchar(60)
+   author_dc: varchar(200)
+   author_creat_de: timestamp
+   author_code: varchar(30)
+}
+class comtnauthorrolerelate {
+   creat_dt: timestamp
+   author_code: varchar(30)
+   role_code: varchar(50)
+}
+class comtnemplyrscrtyestbs {
+   mber_ty_code: char(5)
+   author_code: varchar(30)
+   scrty_dtrmn_trget_id: varchar(20)
+}
+class comtnroleinfo {
+   role_nm: varchar(60)
+   role_pttrn: varchar(300)
+   role_dc: varchar(200)
+   role_ty: varchar(80)
+   role_sort: varchar(10)
+   role_creat_de: timestamp
+   role_code: varchar(50)
+}
+class comtnroles_hierarchy {
+   parnts_role: varchar(30)
+   chldrn_role: varchar(30)
+}
+class comvnusermaster {
+   esntl_id: char(20)
+   user_id: varchar(20)
+   password: varchar(200)
+   user_nm: varchar
+   user_zip: varchar(6)
+   user_adres: varchar(100)
+   user_email: varchar(50)
+   group_id: bpchar
+   user_se: text
+   orgnzt_id: bpchar
+}
+
+comtnauthorrolerelate  -[#595959,plain]-^  comtnauthorinfo       : "author_code"
+comtnauthorrolerelate  -[#595959,plain]-^  comtnroleinfo         : "role_code"
+comtnroles_hierarchy   -[#595959,plain]-^  comtnauthorinfo       : "parnts_role:author_code"
+comtnroles_hierarchy   -[#595959,plain]-^  comtnauthorinfo       : "chldrn_role:author_code"
+@enduml

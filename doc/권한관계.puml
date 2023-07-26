@@ -1,0 +1,56 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class comtnauthorinfo\n역할 {
+   author_nm: varchar(60)
+   author_dc: varchar(200)
+   author_creat_de: timestamp()
+   author_code: varchar_30
+}
+class comtnauthorrolerelate\n접근권한x역할 {
+   creat_dt: timestamp()
+   author_code: varchar_30
+   role_code: varchar_50
+}
+class comtnemplyrscrtyestbs\n사용자x역할 {
+   mber_ty_code: char(5)
+   author_code: varchar(30)
+   scrty_dtrmn_trget_id: varchar_20
+}
+class comtnroleinfo\n접근권한 {
+   role_nm: varchar(60)
+   role_pttrn: varchar(300)
+   role_dc: varchar(200)
+   role_ty: varchar(80)
+   role_sort: varchar(10)
+   role_creat_de: timestamp()
+   role_code: varchar_50
+}
+class comtnroles_hierarchy\n계층 {
+   parnts_role: varchar_30
+   chldrn_role: varchar_30
+}
+class comvnusermaster\n사용자 {
+   esntl_id: char_20
+   user_id: varchar(20)
+   password: varchar(200)
+   user_nm: varchar()
+   user_zip: varchar(6)
+   user_adres: varchar(100)
+   user_email: varchar(50)
+   group_id: bpchar()
+   user_se: text()
+   orgnzt_id: bpchar()
+}
+
+comtnauthorrolerelate\n접근권한x역할 -[#595959,plain]-^  comtnauthorinfo\n역할       : "author_code"
+comtnauthorrolerelate\n접근권한x역할 -[#595959,plain]-^  comtnroleinfo\n접근권한       : "role_code"
+comtnroles_hierarchy\n계층         -[#595959,plain]-^  comtnauthorinfo\n역할       : "parnts_role:author_code"
+comtnroles_hierarchy\n계층         -[#595959,plain]-^  comtnauthorinfo\n역할       : "chldrn_role:author_code"
+comtnemplyrscrtyestbs\n사용자x역할   -[#595959,plain]-^  comvnusermaster\n사용자     : "scrty_dtrmn_trget_id:esntl_id"
+comtnemplyrscrtyestbs\n사용자x역할   -[#595959,plain]-^  comtnauthorinfo\n역할       : "author_code"
+
+@enduml
